@@ -16,7 +16,7 @@ rcu_read_unlock();
 
 if( !process )
 	{
-	printk( KERN_ALERT "Proces %d was not found\n", pid );
+	printk( KERN_ALERT "Process %d was not found\n", pid );
 	return -1;
 	}
 	
