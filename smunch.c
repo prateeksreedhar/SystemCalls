@@ -50,14 +50,18 @@ if( unlikely(process->exit_state == EXIT_ZOMBIE) )
 		
 		
 printk(KERN_ALERT "Sending process %d a bit pattern of 0x%lx\n", pid, bit_pattern);
+	
+// Grab lock for the process 
 if( !lock_task_sighand(process, &flags) )
 	{
 	printk( KERN_ALERT "Failed to grab the lock for process %d\n", pid );
 	return -1;
 	}
 
-// Send signal to the process
+// Send signals to the process
 process->signal->shared_pending.signal.sig[0] |= bit_pattern;	
+	
+// Release lock after sending the signals to the process
 unlock_task_sighand(process, &flags);
 wake_up_process(process);
 return 0;	
