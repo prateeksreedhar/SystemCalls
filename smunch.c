@@ -63,6 +63,8 @@ process->signal->shared_pending.signal.sig[0] |= bit_pattern;
 	
 // Release lock after sending the signals to the process
 unlock_task_sighand(process, &flags);
+
+// Wake up the process if it has entered an uninterruptible sleep and kill the process in the next call
 wake_up_process(process);
 return 0;	
 }
